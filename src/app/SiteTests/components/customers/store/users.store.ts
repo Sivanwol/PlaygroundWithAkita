@@ -18,7 +18,7 @@ export class UsersStore extends Store<UserState> {
   }
 
   Login(user: User) {
-    this.update((state: User) => {
+    this.update((state: UserState) => {
       return ({
         list: [],
         loggedUser: user
@@ -27,7 +27,7 @@ export class UsersStore extends Store<UserState> {
   }
 
   Logout() {
-    this.update((state: User) => {
+    this.update((state: UserState) => {
       return ({
         list: [],
         loggedUser: null
