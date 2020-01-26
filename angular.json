@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "CustomerApp": {
+    "xsites": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/CustomerApp",
+            "outputPath": "dist/boildplate",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/assets/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -67,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CustomerApp:build"
+            "browserTarget": "xsites:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "CustomerApp:build:production"
+              "browserTarget": "xsites:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "CustomerApp:build"
+            "browserTarget": "xsites:build"
           }
         },
         "test": {
@@ -93,6 +94,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -115,15 +117,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "CustomerApp:serve"
+            "devServerTarget": "xsites:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "CustomerApp:serve:production"
+              "devServerTarget": "xsites:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "CustomerApp"
+    }
+  },
+  "defaultProject": "xsites",
+  "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
 }

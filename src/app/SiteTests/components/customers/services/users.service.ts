@@ -5,7 +5,7 @@ import { tap, switchMap, take, find } from "rxjs/operators";
 import { throwError, Observable, Subscription , Subject, BehaviorSubject, of } from "rxjs";
 import { User } from "../models/user.model";
 import { UsersStore } from "../store/users.store";
-import { UserQuery, SearchMetaData } from "../queries/users.query";
+import { UserQuery } from "../queries/users.query";
 import { NgxSpinnerService } from "ngx-spinner";
 
 const httpOptions = {

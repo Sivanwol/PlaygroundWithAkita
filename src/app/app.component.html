@@ -1,6 +1,6 @@
 <mat-drawer-container  [hasBackdrop]="false" class="sidenavContiner">
   <mat-drawer opened [disableClose]="true" [mode]="'side'" class="sidenavDrawer">
-    <mat-list>
+    <mat-list *ngIf="userQuery.isLoggin() | async">
       <h3 mat-subheader>Pages</h3>
       <mat-list-item>
         <mat-icon mat-list-icon>double_arrow</mat-icon>

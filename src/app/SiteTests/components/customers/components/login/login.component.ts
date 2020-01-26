@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { UserService } from '../../services/users.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
+  form = null;
   constructor(private fb: FormBuilder, private userService:UserService) { }
 
   ngOnInit() {

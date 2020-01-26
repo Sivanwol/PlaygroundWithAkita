@@ -3,7 +3,6 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { UserQuery } from '../queries/users.query';
 import { tap } from 'rxjs/operators';
-import { stat } from 'fs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class AuthGuard implements CanActivate {
     return this.userQuery.isLoggin().pipe(
       tap(state => {
         if (!state) {
-          this.router.navigateByUrl('l')
+          this.router.navigateByUrl('test/login')
         } 
       })
     );

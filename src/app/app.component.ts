@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserQuery } from './SiteTests/components/customers/queries/users.query';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Test Platform';
+  constructor(public userQuery: UserQuery) {
+    
+  }
 
 }
