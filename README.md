@@ -1,6 +1,11 @@
 # CustomerApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.
+Please instal json-server see: https://www.npmjs.com/package/json-server
+ and run the follow command: json-server db.json when u in this folder
+## Login User
+to login into system follow this 
+"email": "test@test.com"
+"password": "123456"
 
 ## Development server
 
