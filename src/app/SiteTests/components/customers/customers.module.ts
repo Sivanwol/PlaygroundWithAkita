@@ -2,31 +2,33 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AppMaterialModule } from "../../../Common/app.material.module";
 import { ReactiveFormsModule } from "@angular/forms";
-import { BookSearchBarComponent } from "./compounents/book-search-bar/book-search-bar.component";
-import { BookMainPageComponent } from "./compounents/book-main-page/book-main-page.component";
-import { BookListComponent } from "./compounents/book-list/book-list.component";
-import { BookListItemComponent } from "./compounents/book-list-item/book-list-item.component";
-import { BookSelectedItemComponent } from "./compounents/book-selected-item/book-selected-item.component";
-import { BookService } from './services/book.service';
-import { BookStore } from './store/book.store';
-import { BookQuery } from './queries/book.query';
+import { UserService } from './services/users.service';
+import { UsersStore } from './store/users.store';
+import { UserQuery } from './queries/users.query';
 
 import { EllipsisModule } from 'ngx-ellipsis';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { LoginComponent } from './components/login/login.component';
+import { ListComponent } from './components/list/list.component';
+import { CustomerFormComponent } from './components/customer-form/customer-form.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { CustmersRoutingModule } from './custmers-routing.module';
 @NgModule({
   declarations: [
-    BookSearchBarComponent,
-    BookMainPageComponent,
-    BookListComponent,
-    BookListItemComponent,
-    BookSelectedItemComponent
+    LoginComponent,
+    ListComponent,
+    CustomerFormComponent,
+    SearchBarComponent,
+    LayoutComponent
   ],
-  providers: [BookService, BookStore, BookQuery],
+  providers: [UserService, UsersStore, UserQuery],
   entryComponents: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AppMaterialModule,
+    CustmersRoutingModule,
     NgxSpinnerModule,
     EllipsisModule
   ]
