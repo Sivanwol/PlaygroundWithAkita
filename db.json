@@ -1,0 +1,14 @@
+{
+    "users": [
+      { "id": 1, "email": "test@test.com", "password": "123456" }
+    ],
+    "customers": [
+        { "id": 1, "email": "test@1.com", "fname": "1", "lname": "1", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 2, "email": "test@2.com", "fname": "2", "lname": "2", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 3, "email": "test@3.com", "fname": "3", "lname": "3", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 4, "email": "test@4.com", "fname": "4", "lname": "4", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 5, "email": "test@5.com", "fname": "5", "lname": "5", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 6, "email": "test@6.com", "fname": "6", "lname": "6", "prop1": "1", "prop2": "2", "prop3": "3" },
+        { "id": 7, "email": "test@7.com", "fname": "7", "lname": "7", "prop1": "1", "prop2": "2", "prop3": "3" }
+    ]
+  }
