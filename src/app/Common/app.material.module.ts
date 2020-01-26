@@ -23,6 +23,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   imports: [
     MatButtonModule,
@@ -49,7 +50,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatDividerModule,
     MatIconModule,
     MatTableModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ],
   exports: [
     MatButtonModule,
@@ -76,7 +78,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatDividerModule,
     MatIconModule,
     MatTableModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ]
 })
 export class AppMaterialModule {}

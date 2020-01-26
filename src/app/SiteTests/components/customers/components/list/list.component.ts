@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomerService } from '../../services/customer.service';
+import { Customer } from '../../models/customer.model';
 
 @Component({
   selector: 'app-list',
@@ -7,7 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  public displayedColumns: string[] = ["desciprtion", "name", "actions"];
+  public list$: Observable<Array<Customer>> = null;
+  public hasDataDisplay = false;
+  constructor(public dialog: MatDialog, private customerService: CustomerService, private changeDetectorRef: ChangeDetectorRef) { }
+
 
   ngOnInit() {
   }
