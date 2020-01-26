@@ -20,7 +20,7 @@ export enum BookPagingDirectorion {
 @Injectable({ providedIn: "root" })
 export class UserService {
   private notifySelectedBook$: Subject<User> = new Subject<User>();
-  private ApiURI = "https://localhost:3000/users";
+  private ApiURI = "http://localhost:3000/users";
   private request$: Subscription;
   constructor(private userStore: UsersStore,
               private userQuery: UserQuery,
@@ -34,6 +34,7 @@ login(email: string , passoword: string): Observable<boolean> {
       tap((result: Array<User>) => {
         if (result.length === 1){
           statusLogin = true;
+          this.userStore.Login(result[1]);
         }
       }),
       switchMap(result => of(statusLogin))

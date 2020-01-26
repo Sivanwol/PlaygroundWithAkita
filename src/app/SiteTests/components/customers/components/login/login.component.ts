@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { UserService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { UserService } from '../../services/users.service';
 export class LoginComponent implements OnInit {
 
   form = null;
-  constructor(private fb: FormBuilder, private userService:UserService) { }
+  constructor(private fb: FormBuilder, private userService:UserService, private router: Router) { }
 
   ngOnInit() {
     this.initalForm();
@@ -33,6 +34,8 @@ export class LoginComponent implements OnInit {
         if (!state) {
           this.form.reset();
           alert("User of password is incurrect");
+        } else {
+          this.router.navigate(["test/showcase"]);
         }
       })
     }
