@@ -13,7 +13,7 @@ const httpOptions = {
     "Content-Type": "application/json"
   })
 };
-export enum BookPagingDirectorion {
+export enum PagingDirectorion {
   Next,
   Priv
 }
@@ -41,6 +41,9 @@ login(email: string , passoword: string): Observable<boolean> {
     );
   }
 
+  logout() {
+    this.userStore.Logout();
+  }
   // searchBooks(searchQuery: string , onlyEbooks = false): void {
   //   const startIndex = this.lastSearchMetaData.currentStartIndex;
   //   let searchParams = `${searchQuery}&startIndex=${startIndex}&maxResults=10`;

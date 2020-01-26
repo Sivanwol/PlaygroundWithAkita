@@ -17,6 +17,6 @@ localForage.config({
   version: 1.0,
   storeName: 'boildplate-storage'
 });
-persistState({ include: ['state'], storage: localForage });
+persistState({ include: ['state', 'user'], storage: localForage });
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
