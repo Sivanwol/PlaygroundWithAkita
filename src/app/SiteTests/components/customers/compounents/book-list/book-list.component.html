@@ -1,0 +1,14 @@
+<mat-list role="list">
+  <h3 mat-subheader>List of Books</h3>
+    <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <mat-list-item role="listitem" *ngFor="let item of items$ | async">
+    <app-book-list-item *ngIf="!!item" [bookItem]="item"></app-book-list-item>
+  </mat-list-item>
+</mat-list>

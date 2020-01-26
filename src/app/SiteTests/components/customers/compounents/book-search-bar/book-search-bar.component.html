@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+  <mat-grid-list cols="2">
+    <mat-grid-tile >
+      <mat-slide-toggle
+          class="example-margin"
+          [color]="'primary'"
+          formControlName="onlyEbook">
+        Only Ebook
+      </mat-slide-toggle>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Search Term for a book" formControlName="query">
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

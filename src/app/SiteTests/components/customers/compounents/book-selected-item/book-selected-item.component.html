@@ -1,0 +1,12 @@
+<mat-card class="example-card" *ngIf="hasSelected">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>{{hasEbook}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image height="150px" src="{{tumbnail}}">
+  <mat-card-content>
+    <p>
+      {{subtitle}}
+    </p>
+  </mat-card-content>
+</mat-card>
