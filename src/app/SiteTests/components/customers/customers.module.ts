@@ -14,13 +14,15 @@ import { CustomerFormComponent } from './components/customer-form/customer-form.
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { CustmersRoutingModule } from './custmers-routing.module';
+import { CustmerSelectComponent } from './components/custmer-select/custmer-select.component';
 @NgModule({
   declarations: [
     LoginComponent,
     ListComponent,
     CustomerFormComponent,
     SearchBarComponent,
-    LayoutComponent
+    LayoutComponent,
+    CustmerSelectComponent
   ],
   providers: [UserService, UsersStore, UserQuery],
   entryComponents: [],

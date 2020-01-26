@@ -12,4 +12,5 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
   }
 
+  onAddCustmer() {}
 }
