@@ -1,15 +1,17 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
-import { tap, switchMap, take, find, map, filter } from "rxjs/operators";
 import {
-  throwError,
-  Observable,
-  Subscription,
-  Subject,
-  BehaviorSubject,
-  of
-} from "rxjs";
+  catchError,
+  tap,
+  switchMap,
+  take,
+  find,
+  map,
+  filter,
+  mergeMap
+} from "rxjs/operators";
+import { Observable, Subscription, Subject, BehaviorSubject, of } from "rxjs";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Customer } from "../models/customer.model";
 import { CustomerStore } from "../store/customer.store";
@@ -51,6 +53,9 @@ export class CustomerService {
   delete(id: number): Observable<boolean> {
     return this.http.delete(this.ApiURI + `/${id}`, httpOptions).pipe(
       take(1),
+      catchError(() => {
+        return of(false);
+      }),
       map(result => {
         this.customerStore.remove(id);
         return true;
@@ -62,6 +67,9 @@ export class CustomerService {
     const postData = Object.assign({}, customer);
     return this.http.put(this.ApiURI + `/${id}`, postData, httpOptions).pipe(
       take(1),
+      catchError(() => {
+        return of(false);
+      }),
       map(result => {
         this.customerStore.edit(id, customer);
         return true;
@@ -77,6 +85,9 @@ export class CustomerService {
         postData.id = nextID;
         return this.http.post(this.ApiURI, postData, httpOptions).pipe(
           take(1),
+          catchError(() => {
+            return of(false);
+          }),
           map(result => {
             this.customerStore.add(customer);
             return true;
@@ -90,18 +101,36 @@ export class CustomerService {
     sortBy: string,
     sortByDirection: SortDirectorion,
     pageSize: number,
-    pageDirection: PagingDirectorion
+    pageIndex: number
   ) {
     return this.customerQuery.items$.pipe(
+      switchMap(items => {
+        if (pageIndex === 0) {
+          return this.http.get<Array<Customer>>(this.ApiURI, httpOptions).pipe(
+            catchError(() => {
+              return of([]);
+            }),
+            map(result => {
+              this.customerStore.updateCustomerState(result);
+              return result;
+            })
+          );
+        }
+        return of(items);
+      }),
       map(items => {
         items.sort((sortCustomerA, sortCustomerB) => {
           const nameA = sortCustomerA[sortBy].toUpperCase(); // ignore upper and lowercase
           const nameB = sortCustomerB[sortBy].toUpperCase();
           if (sortByDirection !== this.currentSortDirection) {
-            if (sortByDirection === SortDirectorion.ASC) {
+            if (sortByDirection === SortDirectorion.ASC && nameA < nameB) {
               return -1;
+            } else if (
+              sortByDirection === SortDirectorion.DESC &&
+              nameA > nameB
+            ) {
+              return 1;
             }
-            return 1;
           }
           return 0;
         });
@@ -112,14 +141,15 @@ export class CustomerService {
           this.nextIdx += pageSize;
           return items.slice(0, pageSize);
         } else {
-          if (pageDirection === PagingDirectorion.Next) {
+          if (pageIndex > this.nextIdx) {
             this.nextIdx += pageSize;
-            return items.slice(this.nextIdx, pageSize);
+          } else {
+            this.nextIdx -= pageSize;
           }
-          this.nextIdx -= pageSize;
           return items.slice(this.nextIdx, pageSize);
         }
-      })
+      }),
+      catchError(() => of([]))
     );
   }
   // searchBooks(searchQuery: string , onlyEbooks = false): void {

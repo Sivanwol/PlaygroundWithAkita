@@ -16,6 +16,14 @@ export class CustomerStore extends Store<CustomerState> {
     super(createInitialState());
   }
 
+  updateCustomerState(customers: Array<Customer>) {
+    this.update((state: CustomerState) => {
+      return ({
+        list: [...customers]
+      });
+    });
+  }
+
   add(customer: Customer) {
     this.update((state: CustomerState) => {
       return ({
