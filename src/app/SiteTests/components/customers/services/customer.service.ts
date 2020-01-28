@@ -38,6 +38,7 @@ export class CustomerService {
   private ApiURI = "http://localhost:3000/customers";
   private request$: Subscription;
   private nextIdx = 0;
+
   private currentSortDirection = SortDirectorion.DESC;
   constructor(
     private customerStore: CustomerStore,
@@ -106,6 +107,17 @@ export class CustomerService {
       })
     );
   }
+  requestListData() {
+    return this.http.get<Array<Customer>>(this.ApiURI, httpOptions).pipe(
+      catchError(() => {
+        return of([]);
+      }),
+      map(result => {
+        this.customerStore.updateCustomerState(result);
+        return result;
+      })
+    );
+  }
 
   getList(
     sortBy: string,
@@ -114,20 +126,6 @@ export class CustomerService {
     pageIndex: number
   ) {
     return this.customerQuery.items$.pipe(
-      switchMap(items => {
-        if (pageIndex === 0) {
-          return this.http.get<Array<Customer>>(this.ApiURI, httpOptions).pipe(
-            catchError(() => {
-              return of([]);
-            }),
-            map(result => {
-              this.customerStore.updateCustomerState(result);
-              return result;
-            })
-          );
-        }
-        return of(items);
-      }),
       map(items => {
         items.sort((sortCustomerA, sortCustomerB) => {
           const nameA = sortCustomerA[sortBy].toUpperCase(); // ignore upper and lowercase

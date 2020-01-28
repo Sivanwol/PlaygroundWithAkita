@@ -15,7 +15,14 @@ import {
 import { Customer } from "../../models/customer.model";
 import { Sort } from "@angular/material/sort";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
-import { startWith, switchMap, map, takeUntil, filter } from "rxjs/operators";
+import {
+  startWith,
+  switchMap,
+  map,
+  takeUntil,
+  filter,
+  tap
+} from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 import { CustomerFormComponent } from "../customer-form/customer-form.component";
 
@@ -24,7 +31,7 @@ import { CustomerFormComponent } from "../customer-form/customer-form.component"
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.scss"]
 })
-export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
+export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
   public displayedColumns: string[] = [
     "id",
     "firstName",
@@ -36,22 +43,50 @@ export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
   resultsLength = 0;
   private unsubscribe$ = new Subject();
   public hasDataDisplay = false;
-  dataSource:MatTableDataSource<Customer>;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  dataSource: MatTableDataSource<Customer>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     public dialog: MatDialog,
     private customerService: CustomerService,
     private changeDetectorRef: ChangeDetectorRef,
     private spinner: NgxSpinnerService
-  ) {
-  }
+  ) {}
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<Customer>([]);
+    this.dataSource = new MatTableDataSource<Customer>();
   }
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.registerTableDataFlow();
+    this.customerService.reloadCustomerList();
+  }
+  registerTableDataFlow(){
+
+    this.customerService
+      .getReloadCustomerList()
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        tap(() => {
+          this.customerService
+            .requestListData()
+            .pipe(
+              takeUntil(this.unsubscribe$),
+              map(data => {
+                this.spinner.hide();
+
+                if (!this.dataSource) {
+                  return data;
+                }
+                return null;
+              }),
+              filter(data => !!data)
+            )
+            .subscribe(data => {
+              this.dataSource.data = data;
+              this.dataSource.paginator.firstPage();
+            });
+        })
+      )
+      .subscribe(() => {});
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         takeUntil(this.unsubscribe$),
@@ -78,15 +113,7 @@ export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
       )
       .subscribe(data => {
         this.dataSource.data = data;
-        this.sort.sortChange
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(() => (this.dataSource.paginator.firstPage()));
-        this.customerService
-          .getReloadCustomerList()
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(() => (this.dataSource.paginator.firstPage()));
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
