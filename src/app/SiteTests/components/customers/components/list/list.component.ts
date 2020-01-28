@@ -3,7 +3,8 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   ViewChild,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from "@angular/core";
 import { Observable, merge, Subject } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";

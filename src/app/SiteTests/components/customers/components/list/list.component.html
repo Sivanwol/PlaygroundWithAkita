@@ -41,6 +41,7 @@
   <div *ngIf="!hasDataDisplay">No records found</div>
   <mat-paginator
     *ngIf="hasDataDisplay"
+    [length]="resultsLength"
     [pageSizeOptions]="[5,10,20]"
     showFirstLastButtons
   ></mat-paginator>
