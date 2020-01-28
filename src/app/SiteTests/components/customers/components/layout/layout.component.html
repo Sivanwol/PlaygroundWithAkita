@@ -2,14 +2,9 @@
   <mat-card class="cusotmer-card">
     <mat-card-header>
       <mat-card-title>Customer Control</mat-card-title>
-      <mat-card-subtitle>List</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-actions>
-      <button mat-button (click)="onAddCustmer()">Add Customer</button>
-    </mat-card-actions>
     <mat-card-content class="cusotmer-card-content">
-      <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile [colspan]=2>1</mat-grid-tile>
+      <mat-grid-list cols="2">
         <mat-grid-tile>
           <app-list></app-list>
         </mat-grid-tile>
@@ -18,5 +13,8 @@
         </mat-grid-tile>
       </mat-grid-list>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="onAddCustmer()">Add Customer</button>
+    </mat-card-actions>
   </mat-card>
 </div>
