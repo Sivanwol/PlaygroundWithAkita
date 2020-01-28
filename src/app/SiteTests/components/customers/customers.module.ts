@@ -11,21 +11,29 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { LoginComponent } from './components/login/login.component';
 import { ListComponent } from './components/list/list.component';
 import { CustomerFormComponent } from './components/customer-form/customer-form.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { CustmersRoutingModule } from './custmers-routing.module';
 import { CustmerSelectComponent } from './components/custmer-select/custmer-select.component';
+import { CustomerService } from './services/customer.service';
+import { CustomerStore } from './store/customer.store';
+import { CustomerQuery } from './queries/customer.query';
 @NgModule({
   declarations: [
     LoginComponent,
     ListComponent,
     CustomerFormComponent,
-    SearchBarComponent,
     LayoutComponent,
     CustmerSelectComponent
   ],
-  providers: [UserService, UsersStore, UserQuery],
-  entryComponents: [],
+  providers: [
+    UserService,
+    UsersStore,
+    UserQuery,
+    CustomerService,
+    CustomerStore,
+    CustomerQuery
+  ],
+  entryComponents: [CustomerFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

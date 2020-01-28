@@ -33,6 +33,7 @@ export class ListComponent implements OnInit , OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.paginator.pageIndex = 0;
     this.sort.sortChange.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(() => (this.paginator.pageIndex = 0));
