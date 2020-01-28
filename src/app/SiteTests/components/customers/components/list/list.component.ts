@@ -48,11 +48,10 @@ export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
   }
   ngOnInit() {
     this.dataSource = new MatTableDataSource<Customer>([]);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator.firstPage();
   }
   ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         takeUntil(this.unsubscribe$),
