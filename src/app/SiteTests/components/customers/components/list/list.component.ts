@@ -56,16 +56,17 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource<Customer>();
   }
   ngAfterViewInit() {
+
     this.registerTableDataFlow();
     this.customerService.reloadCustomerList();
   }
-  registerTableDataFlow(){
-
+  registerTableDataFlow() {
     this.customerService
       .getReloadCustomerList()
       .pipe(
         takeUntil(this.unsubscribe$),
         tap(() => {
+          this.spinner.show();
           this.customerService
             .requestListData()
             .pipe(
@@ -74,15 +75,15 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
                 this.spinner.hide();
 
                 if (!this.dataSource) {
-                  return data;
+                  return null;
                 }
-                return null;
+                return data;
               }),
               filter(data => !!data)
             )
             .subscribe(data => {
               this.dataSource.data = data;
-              this.dataSource.paginator.firstPage();
+              this.paginator.pageIndex = 0;
             });
         })
       )
@@ -91,7 +92,6 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$),
         switchMap(() => {
-          this.spinner.show();
           return this.customerService.getList(
             this.sort.active,
             this.sort.direction === "desc"
@@ -100,16 +100,7 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
             this.paginator.pageSize,
             this.paginator.pageIndex
           );
-        }),
-        map(data => {
-          this.spinner.hide();
-
-          if (!this.dataSource) {
-            return data;
-          }
-          return null;
-        }),
-        filter(data => !!data)
+        })
       )
       .subscribe(data => {
         this.dataSource.data = data;

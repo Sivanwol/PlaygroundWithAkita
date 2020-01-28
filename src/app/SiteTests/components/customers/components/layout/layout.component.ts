@@ -40,9 +40,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       data: null
     });
 
-    dialogRef.afterClosed().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((result: {valid: boolean , data: Customer}) => {
+    dialogRef.afterClosed().subscribe((result: {valid: boolean , data: any}) => {
       if (result.valid) {
         this.customerService.add(result.data).pipe(
           takeUntil(this.unsubscribe$)

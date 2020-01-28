@@ -1,6 +1,12 @@
 .cusotmer-card {
   width: 70%;
   margin: 15px auto;
+  .cusotmer-card-content {
+    mat-grid-tile {
+      height: 100%;
+      overflow: auto;
+    }
+  }
 }
 app-list {
   height: 100%;
