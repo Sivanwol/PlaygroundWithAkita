@@ -1,0 +1,20 @@
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: [col] 50% [col] 50%;
+  grid-template-rows: [row] auto [row] auto [row];
+  background-color: #fff;
+  color: #444;
+  .box {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+
+    .email,.prop3 {
+      grid-column: col / span 2;
+      grid-row: row 2 ;
+    }
+  }
+}

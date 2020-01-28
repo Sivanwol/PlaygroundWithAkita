@@ -1,1 +1,33 @@
-<p>custmer-select works!</p>
+<mat-card class="example-card" *ngIf="customerData">
+  <mat-card-header>
+    <mat-card-title>Customer Info</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="wrapper">
+      <div class="box email">
+        <h5>Email</h5>
+        <p>{{customerData.email}}</p>
+      </div>
+      <div class="box fname">
+        <h5>First Name</h5>
+        <p>{{customerData.firstName}}</p>
+      </div>
+      <div class="box lname">
+        <h5>last Name</h5>
+        <p>{{customerData.lastName}}</p>
+      </div>
+      <div class="box prop1">
+        <h5>Prop Definintion</h5>
+        <p>{{customerData.prop1}}</p>
+      </div>
+      <div class="box prop2">
+        <h5>PropAction Prop 2</h5>
+        <p>{{customerData.prop2}}</p>
+      </div>
+      <div class="box prop3">
+        <h5>PropAction Prop 3</h5>
+        <p>{{customerData.prop3}}</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -32,6 +32,8 @@ export enum SortDirectorion {
 }
 @Injectable({ providedIn: "root" })
 export class CustomerService {
+  private notifyReloadCustomerList$: Subject<null> = new Subject<null>();
+
   private notifySelectedCustomer$: Subject<Customer> = new Subject<Customer>();
   private ApiURI = "http://localhost:3000/customers";
   private request$: Subscription;
@@ -43,6 +45,14 @@ export class CustomerService {
     private http: HttpClient,
     private spinner: NgxSpinnerService
   ) {}
+
+  reloadCustomerList() {
+    this.notifyReloadCustomerList$.next();
+  }
+
+  getReloadCustomerList(): Observable<null> {
+    return this.notifyReloadCustomerList$;
+  }
 
   markSelectCustomer(customer: Customer) {
     this.notifySelectedCustomer$.next(customer);

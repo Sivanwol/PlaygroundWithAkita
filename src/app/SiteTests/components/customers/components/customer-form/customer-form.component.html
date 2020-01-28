@@ -1,1 +1,49 @@
-<p>customer-form works!</p>
+<form [formGroup]="form">
+  <h2 mat-dialog-title>{{formTitle}}</h2>
+  <mat-dialog-content>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Enter Email" type="email" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="First Name" formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Last Name" formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Data on Prop 1" formControlName="prop1" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Subject of Prop2" formControlName="prop2" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <textarea
+        matInput
+        placeholder="Enter Description for Prop 3"
+        formControlName="prop3"
+      ></textarea>
+    </mat-form-field>
+
+    <div
+      *ngIf="form.invalid && (form.dirty || form.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="form.errors && form.errors.required">
+        Missing Reqiure Fields.
+      </div>
+      <div *ngIf="form.errors && form.errors.email">
+        Field not match in email format.
+      </div>
+      <div
+        *ngIf="form.errors && (form.errors.minlength || form.errors.maxlength)"
+      >
+        one of the field reqire Bettwen 4-6 characters long.
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCloseClick()">Close Window</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button type="submit" (click)="onSubmitClick()">Save</button>
+  </mat-dialog-actions>
+</form>
