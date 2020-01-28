@@ -118,7 +118,7 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(resulved => {
         if (resulved) {
-          this.paginator.pageIndex = 0; //attempt to reload
+          this.customerService.reloadCustomerList();
         } else {
           alert("Unknown error");
         }
@@ -140,7 +140,6 @@ export class ListComponent implements AfterViewInit, OnInit, OnDestroy {
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((result: { valid: boolean; data: Customer }) => {
         if (result.valid) {
           this.customerService
