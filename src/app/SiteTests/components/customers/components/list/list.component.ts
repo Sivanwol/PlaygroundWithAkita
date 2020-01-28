@@ -36,29 +36,23 @@ export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
   resultsLength = 0;
   private unsubscribe$ = new Subject();
   public hasDataDisplay = false;
-  dataSource = null;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  dataSource:MatTableDataSource<Customer>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   constructor(
     public dialog: MatDialog,
     private customerService: CustomerService,
     private changeDetectorRef: ChangeDetectorRef,
     private spinner: NgxSpinnerService
-  ) {}
-  ngOnInit() {
-    // This line of code below:
-    this.dataSource = new MatTableDataSource<Customer>();
+  ) {
   }
-  ngAfterViewInit() {
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource<Customer>([]);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.sort.sortChange
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => (this.paginator.pageIndex = 0));
-    this.customerService
-      .getReloadCustomerList()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => (this.paginator.pageIndex = 0));
+    this.dataSource.paginator.firstPage();
+  }
+  ngAfterViewInit() {
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         takeUntil(this.unsubscribe$),
@@ -83,7 +77,17 @@ export class ListComponent implements AfterViewInit, OnInit,OnDestroy {
         }),
         filter(data => !!data)
       )
-      .subscribe(data => (this.dataSource.data = data));
+      .subscribe(data => {
+        this.dataSource.data = data;
+        this.sort.sortChange
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => (this.dataSource.paginator.firstPage()));
+        this.customerService
+          .getReloadCustomerList()
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => (this.dataSource.paginator.firstPage()));
+      }
+    );
   }
 
   ngOnDestroy(): void {

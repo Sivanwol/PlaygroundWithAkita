@@ -1,10 +1,10 @@
 <ng-container>
   <table
     mat-table
+    [hidden]="!dataSource?.data"
     [dataSource]="dataSource"
     matSort
     class="mat-elevation-z8"
-    *ngIf="hasDataDisplay"
   >
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
