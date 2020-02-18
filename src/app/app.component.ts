@@ -26,12 +26,14 @@ export class AppComponent implements OnInit {
           {
             label: "Page 1",
             routerLink: ["/test/page1"],
+            routerLinkActiveOptions: "active",
             icon: "pi pi-fw pi-angle-double-right"
           },
           { separator: true },
           {
             label: "Page 2",
             routerLink: ["/test/page2"],
+            routerLinkActiveOptions: "active",
             icon: "pi pi-fw pi-angle-double-right"
           }
         ]
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
       {
         label: "Show Case",
         icon: "pi pi-pw pi-desktop",
+        routerLinkActiveOptions: "active",
         routerLink: ["/test/showcase"]
       }
     ];

@@ -1,70 +1,61 @@
-<form [formGroup]="form">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-      <mat-card-subtitle>Custmer Contorl</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="login-card-content">
-      <div>
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            placeholder="User Email"
-            type="email"
-            formControlName="email"
-          />
-        </mat-form-field>
-        <mat-hint>What is the email</mat-hint>
-
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            placeholder="Password"
-            type="password"
-            formControlName="password"
-          />
-        </mat-form-field>
-
-        <div
-          *ngIf="form.invalid && (form.dirty || form.touched)"
-          class="alert alert-danger"
-        >
-          <mat-divider></mat-divider>
-          <mat-error
-            *ngIf="form.invalid && form.errors && form.errors.required"
-          >
-            Password Field is required.
-          </mat-error>
-          <mat-error
-            *ngIf="form.invalid && form.errors && form.errors.minlength"
-          >
-            Password Field not match as password
-          </mat-error>
+<div class="login-card">
+  <form [formGroup]="form">
+    <p-panel>
+      <p-header>
+        Stock Query Service
+      </p-header>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <span class="ui-float-label">
+            <input
+              id="float-input"
+              type="email"
+              formControlName="email"
+              size="30"
+              pInputText
+            />
+            <label for="float-input">Email</label>
+          </span>
         </div>
-
+        <div class="ui-g-12">
+          <span class="ui-float-label">
+            <input
+              id="float-input"
+              type="password"
+              formControlName="password"
+              size="30"
+              pInputText
+            />
+            <label for="float-input">Password</label>
+          </span>
+        </div>
         <div
+          class="ui-g-6"
           *ngIf="form.invalid && (form.dirty || form.touched)"
           class="alert alert-danger"
         >
-          <mat-error
+          <p-message
             *ngIf="form.invalid && form.errors && form.errors.required"
-          >
-            Email Field is required.
-          </mat-error>
-          <mat-error
-            *ngIf="
-              form.invalid &&
-              form.errors &&
-              (form.errors.email || form.errors.minlength)
-            "
-          >
-            Email Field not match as email format
-          </mat-error>
+            severity="error"
+            text="Field is required"
+          ></p-message>
+          <p-message
+            *ngIf="form.invalid && form.errors && form.errors.minlength"
+            severity="error"
+            text="Password Field not match as password"
+          ></p-message>
         </div>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="onLoginHandler()">Login</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+      <p-footer>
+        <button
+          pButton
+          (click)="onLoginHandler()"
+          class="login-btn ui-button-rounded"
+          label="Login"
+        >
+
+        </button>
+      </p-footer>
+    </p-panel>
+  </form>
+</div>
