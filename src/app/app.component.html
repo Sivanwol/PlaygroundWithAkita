@@ -1,40 +1,14 @@
-<mat-drawer-container  [hasBackdrop]="false" class="sidenavContiner">
-  <mat-drawer opened [disableClose]="true" [mode]="'side'" class="sidenavDrawer">
-    <mat-list *ngIf="userQuery.isLoggin() | async">
-      <h3 mat-subheader>Pages</h3>
-      <mat-list-item>
-        <mat-icon mat-list-icon>double_arrow</mat-icon>
-        <a routerLink="/test/page1" routerLinkActive="active">
-          <h4 mat-line>Exmaple</h4>
-          <p mat-line>Page 1</p>
-        </a>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <mat-icon mat-list-icon>double_arrow</mat-icon>
-        <a routerLink="/test/page2" routerLinkActive="active">
-          <h4 mat-line>Exmaple</h4>
-          <p mat-line>Page 2</p>
-        </a>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <mat-icon mat-list-icon>double_arrow</mat-icon>
-        <a routerLink="/test/showcase" routerLinkActive="active">
-          <h4 mat-line>{{title}}</h4>
-        </a>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <mat-icon mat-list-icon>double_arrow</mat-icon>
-        <a href="javascript:void()" (click)='onLogout()'>
-          <h4 mat-line>Logout</h4>
-        </a>
-      </mat-list-item>
-    </mat-list>
-  </mat-drawer>
-  <mat-drawer-content  class="sidenavDrawerContent">
-    <router-outlet></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
-
+<div class="ui-g">
+  <div class="ui-g-12 ui-md-2">Menu</div>
+  <div class="ui-g-12 ui-md-10 ui-g-nopad">
+    <div class="ui-g-12">
+      <p-panelMenu [model]="items" [style]="{ width: '300px' }"></p-panelMenu>
+    </div>
+    <div class="ui-g-12 ui-g-nopad">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <div class="ui-g-12">
+    Build By Sivan Wolberg
+  </div>
+</div>

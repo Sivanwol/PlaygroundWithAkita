@@ -11,8 +11,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.14",
-    "@angular/cdk": "~8.2.3",
+    "@angular/animations": "^8.2.14",
+    "@angular/cdk": "^8.2.3",
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
@@ -27,6 +27,9 @@
     "ngforage": "^4.0.3",
     "ngx-ellipsis": "^2.1.2",
     "ngx-spinner": "^8.1.0",
+    "primeflex": "^1.0.0",
+    "primeicons": "^2.0.0",
+    "primeng": "^8.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

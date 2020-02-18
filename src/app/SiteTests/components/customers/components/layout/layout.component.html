@@ -1,18 +1,18 @@
 <div>
-  <mat-card class="cusotmer-card">
-    <mat-card-header>
-      <mat-card-title>Customer Control</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="cusotmer-card-content">
-      <mat-grid-list cols="2">
-        <mat-grid-tile >
-          <button mat-button (click)="onAddCustmer()">Add Customer</button>
-          <app-list></app-list>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <app-custmer-select></app-custmer-select>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-card-content>
-  </mat-card>
+  <p-panel >
+    <p-header>
+        Stock Stats
+    </p-header>
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-10 ui-g-nopad">
+        <div class="ui-g-12">
+          <app-stock-bar></app-stock-bar>
+        </div>
+        <div class="ui-g-12 ui-g-nopad">
+          <div class="ui-g-6"><app-stock-list></app-stock-list></div>
+          <div class="ui-g-6"><app-stock-select></app-stock-select></div>
+        </div>
+      </div>
+    </div>
+  </p-panel>
 </div>

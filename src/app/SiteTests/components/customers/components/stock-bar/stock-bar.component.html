@@ -1,0 +1,8 @@
+<div class="p-grid p-justify-between">
+  <div class="p-col-2">
+    <h1>Stock List</h1>
+  </div>
+  <div class="p-col-4">
+    Refeash Rate <p-dropdown [options]="refreshRates" [(ngModel)]="selectRate" (onChange)="onRefreashRateSelected($event)"></p-dropdown>
+  </div>
+</div>
