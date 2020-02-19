@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit , ChangeDetectorRef } from "@angular/core";
 import { Stock } from "../../models/stock.model";
 import { SelectItem } from "primeng/api";
 
@@ -9,13 +9,14 @@ import { SelectItem } from "primeng/api";
 })
 export class StockListComponent implements OnInit {
   values: Stock[] = [];
+  origValues: Stock[] = [];
   selectedItem: Stock;
   sortOptions: SelectItem[];
   sortKey: string;
   sortField: string;
   sortOrder: number;
   displayDialog: boolean;
-  constructor() {}
+  constructor(private changeDetection: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.mockData();
@@ -48,6 +49,17 @@ export class StockListComponent implements OnInit {
       };
       this.values = [...this.values, objSeed];
     }
+    this.origValues = [...this.values];
+  }
+  onSearch($event) {
+    const arr = [];
+    const value = $event.target.value;
+    if (value === "") {
+      this.values = this.origValues.slice();
+    } else {
+      this.values = this.origValues.filter(item => item.volume.toString().includes(value));
+    }
+    this.changeDetection.detectChanges();
   }
   moreInfo($event, item: Stock) {
     this.selectedItem = item;

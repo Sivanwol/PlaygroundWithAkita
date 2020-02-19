@@ -15,6 +15,7 @@ import { ListboxModule } from "primeng/listbox";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
 import { InputTextModule } from "primeng/inputtext";
+import {KeyFilterModule} from 'primeng/keyfilter';
 import { DialogModule } from "primeng/dialog";
 import { ReactiveFormsModule } from "@angular/forms";
 import { UserService } from "./services/users.service";
@@ -64,6 +65,7 @@ import { CustomerQuery } from "./queries/customer.query";
     DropdownModule,
     InputTextModule,
     PaginatorModule,
+    KeyFilterModule,
     ButtonModule,
     ListboxModule,
     PanelMenuModule,
