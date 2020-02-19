@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: "Example (Internal Testing)",
+        label: "Route Testing",
         icon: "pi pi-pw pi-file",
         items: [
           {

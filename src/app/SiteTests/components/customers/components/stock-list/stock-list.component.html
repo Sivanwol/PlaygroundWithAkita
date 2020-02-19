@@ -1,1 +1,121 @@
-<p>stock-list works!</p>
+<div>
+  <p-dataView
+    #dv
+    [value]="values"
+    [paginator]="true"
+    [rows]="20"
+    paginatorPosition="both"
+    filterBy="volume"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+  >
+    <p-header>
+      <div class="ui-helper-clearfix">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-4">
+            <p-dropdown
+              [options]="sortOptions"
+              [(ngModel)]="sortKey"
+              placeholder="Sort By"
+              (onChange)="onSortChange($event)"
+              [style]="{ 'min-width': '140px' }"
+            ></p-dropdown>
+          </div>
+          <div class="ui-g-6 ui-md-4 filter-container">
+            <div style="position:relative">
+              <input
+                type="search"
+                pInputText
+                placeholder="Search by"
+                (input)="dv.filter($event.target.value)"
+              />
+            </div>
+          </div>
+          <div class="ui-g-6 ui-md-4" style="text-align:right">
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+        </div>
+      </div>
+    </p-header>
+    <ng-template let-item pTemplate="listItem">
+      <div class="ui-g-12">
+        <div class="item-details">
+          <div>
+            <div class="ui-g">
+              <div class="ui-g-12">
+                Low: <b>{{ item.low }}</b>
+              </div>
+              <div class="ui-g-12">
+                High: <b>{{ item.high }}</b>
+              </div>
+              <div class="ui-g-12">
+                Open: <b>{{ item.open }}</b>
+              </div>
+              <div class="ui-g-12">
+                Volume: <b>{{ item.volume }}</b>
+              </div>
+            </div>
+          </div>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-search"
+            label="More Info"
+            (click)="moreInfo($event, item)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-thumbs-down"
+            label="Remove"
+            (click)="removeItem($event, item)"
+          ></button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-item pTemplate="gridItem">
+      <div style="padding:.5em" class="ui-g-12 ui-md-3">
+        <p-panel [header]="item.volume" [style]="{ 'text-align': 'center' }">
+          <div class="car-detail">{{ item.low }} - {{ item.high }}</div>
+          <hr class="ui-widget-content" style="border-top:0" />
+          <button
+            pButton
+            type="button"
+            icon="pi pi-search"
+            label="More Info"
+            (click)="moreInfo($event, item)"
+          ></button>
+        </p-panel>
+      </div>
+    </ng-template>
+  </p-dataView>
+  <p-dialog
+    header="Stock Details"
+    [(visible)]="displayDialog"
+    [responsive]="true"
+    showEffect="fade"
+    [modal]="true"
+    [style]="{ width: '225px' }"
+    (onAfterHide)="onDialogHide()"
+  >
+    <div class="ui-g" *ngIf="selectedItem">
+      <div class="ui-g-4">Open:</div>
+      <div class="ui-g-8">{{ selectedItem.open }}</div>
+      <div class="ui-g-4">Low:</div>
+      <div class="ui-g-8">{{ selectedItem.open }}</div>
+      <div class="ui-g-4">High:</div>
+      <div class="ui-g-8">{{ selectedItem.open }}</div>
+      <div class="ui-g-4">Volume:</div>
+      <div class="ui-g-8">{{ selectedItem.open }}</div>
+      <div class="ui-g-12">
+        <button
+            pButton
+            type="button"
+            icon="pi pi-search"
+            label="Deep Info"
+            (click)="goDeepInfo($event)"
+          ></button>
+      </div>
+    </div>
+  </p-dialog>
+</div>

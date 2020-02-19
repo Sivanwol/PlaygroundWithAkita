@@ -14,7 +14,8 @@ import { PanelMenuModule } from "primeng/panelmenu";
 import { ListboxModule } from "primeng/listbox";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
-import {InputTextModule} from 'primeng/inputtext';
+import { InputTextModule } from "primeng/inputtext";
+import { DialogModule } from "primeng/dialog";
 import { ReactiveFormsModule } from "@angular/forms";
 import { UserService } from "./services/users.service";
 import { UsersStore } from "./store/users.store";
@@ -58,6 +59,7 @@ import { CustomerQuery } from "./queries/customer.query";
     ScrollPanelModule,
     PanelModule,
     DataViewModule,
+    DialogModule,
     CheckboxModule,
     DropdownModule,
     InputTextModule,

@@ -1,16 +1,22 @@
 <div>
-  <p-panel >
+  <p-panel>
     <p-header>
-        Stock Stats
+      Stock Stats
     </p-header>
     <div class="ui-g">
-      <div class="ui-g-12 ui-md-10 ui-g-nopad">
+      <div class="ui-g-12 ui-g-nopad">
         <div class="ui-g-12">
           <app-stock-bar></app-stock-bar>
         </div>
         <div class="ui-g-12 ui-g-nopad">
-          <div class="ui-g-10 ui-lg-2 ui-md-10"><app-stock-select></app-stock-select></div>
-          <div class="ui-g-10 ui-lg-10 ui-md-10"><app-stock-list></app-stock-list></div>
+          <div class="p-grid p-align-start vertical-container">
+            <div class="ui-g-12 ui-lg-2 ui-md-12">
+              <app-stock-select></app-stock-select>
+            </div>
+            <div class="ui-g-12 ui-lg-10 ui-md-12 p-col">
+              <app-stock-list></app-stock-list>
+            </div>
+          </div>
         </div>
       </div>
     </div>

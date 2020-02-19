@@ -1,0 +1,32 @@
+.filter-container {
+  text-align: center;
+}
+.item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em;
+  border-bottom: 1px solid #d9dad9;
+}
+.item-details > div {
+  display: flex;
+  align-items: center;
+}
+.item-detail {
+  padding: 0 1em 1em 1em;
+  border-bottom: 1px solid #d9dad9;
+  margin: 1em;
+}
+.ui-panel-content {
+  padding: 1em;
+}
+.dark-theme :host ::ng-deep .car-details,
+.dark-theme :host ::ng-deep .car-detail {
+  border-bottom: 1px solid #191919;
+}
+
+@media (max-width: 1024px) {
+  .filter-container {
+    text-align: left;
+  }
+}

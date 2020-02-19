@@ -1,9 +1,9 @@
-<div class="ui-g center">
-  <div class="ui-g-12 ui-md-10 ui-g-nopad">
-    <div class="ui-g-4 ui-lg-4 ui-md-4" *ngIf="userQuery.isLoggin() | async">
-      <p-panelMenu [model]="items" [style]="{ width: '300px' }"></p-panelMenu>
+<div class="ui-g center p-grid p-align-start vertical-container">
+  <div class="ui-g-12 ui-g-nopad">
+    <div class="ui-g-12 ui-lg-2 p-col" *ngIf="userQuery.isLoggin() | async">
+      <p-panelMenu [model]="items"></p-panelMenu>
     </div>
-    <div class="ui-g-10 ui-lg-8 ui-md-10 ui-g-nopad">
+    <div class="ui-g-12 ui-lg-10 ui-g-nopad p-col">
       <router-outlet></router-outlet>
     </div>
   </div>
