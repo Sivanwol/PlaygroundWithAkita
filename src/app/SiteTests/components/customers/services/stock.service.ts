@@ -9,7 +9,9 @@ import {
   bufferCount,
   distinctUntilChanged,
   timeout,
-  publish
+  publish,
+  exhaustMap,
+  take
 } from "rxjs/operators";
 import { Stock } from "../models/stock.model";
 import { StockStore } from "../store/stock.store";
@@ -31,14 +33,6 @@ export class StockService {
   private updateStateArr: Set<string>;
   private stocks: string[] = [];
   private notifyStockFetching$: Subject<null> = new Subject<null>();
-  private notifyStockUpdateFetching$: Subject<null> = new Subject<null>();
-  private obsTimerUpdate$: Observable<any>;
-  private notifyStockUpdateRefreashRate$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(30000);
-  private notifyStockPoll$: BehaviorSubject<Array<Stock>> = new BehaviorSubject<
-    Array<Stock>
-  >([]);
   constructor(
     private stockStore: StockStore,
     private stockQuery: StockQuery,
@@ -47,23 +41,14 @@ export class StockService {
   getStocks(): Observable<Array<Stock>> {
     return this.notifyStockFetching$.pipe(
       find(() => this.stocks.length > 0),
-      mergeMap(stocks => {
-        return this.handleStockFetchingData().pipe(
-          switchMap(stock => {
-            return this.stockQuery.items$;
-          }),
-          tap(stocks => {
-            this.notifyStockPoll$.next(stocks); // we trigger this for the main subscriver
-          })
-        );
-      }),
+      mergeMap(stocks => this.handleStockFetchingData()),
       switchMap(stocks => this.connectTimer())
     );
   }
 
   public updateRefreashRate(refreshRate: number) {
     this.refreshRate = refreshRate;
-    this.notifyStockUpdateFetching$.next();
+    this.notifyStockFetching$.next();
   }
 
   public requestNewStock(stocks: string[]) {
@@ -73,19 +58,14 @@ export class StockService {
     this.notifyStockFetching$.next();
   }
   private connectTimer(): Observable<Array<Stock>> {
-    return this.notifyStockUpdateRefreashRate$.pipe(
+    return this.notifyStockFetching$.pipe(
       tap(rate => (this.refreshRate = rate)),
-      switchMap(() => {
-        return interval(this.refreshRate).pipe(
-          tap(stocks => {
-            this.notifyStockFetching$.next();
-          }),
-          publish()
-        );
-      }),
-      switchMap(stocks => {
-        return this.notifyStockPoll$;
+      switchMap(() => this.stockQuery.items$),
+      timeout(this.refreshRate),
+      tap(stocks => {
+        this.notifyStockFetching$.next();
       })
+
     );
   }
   private handleStockFetchingData(): Observable<any> {
@@ -103,8 +83,7 @@ export class StockService {
             }
           })
         );
-      }),
-      delay(500)
+      })
     );
   }
 }
