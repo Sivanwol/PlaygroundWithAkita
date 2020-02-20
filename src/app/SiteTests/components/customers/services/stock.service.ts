@@ -11,7 +11,8 @@ import {
   timeout,
   publish,
   exhaustMap,
-  take
+  take,
+  concatMap
 } from "rxjs/operators";
 import { Stock } from "../models/stock.model";
 import { StockStore } from "../store/stock.store";
@@ -41,8 +42,13 @@ export class StockService {
   getStocks(): Observable<Array<Stock>> {
     return this.notifyStockFetching$.pipe(
       find(() => this.stocks.length > 0),
-      mergeMap(stocks => this.handleStockFetchingData()),
-      switchMap(stocks => this.connectTimer())
+      concatMap(stocks => this.handleStockFetchingData()),
+      timeout(this.refreshRate),
+      tap(stocks => {
+        this.notifyStockFetching$.next();
+      }),
+
+      switchMap(() => this.stockQuery.items$),
     );
   }
 
@@ -56,17 +62,6 @@ export class StockService {
     this.updateStateArr = new Set();
     this.stockStore.clearStocks();
     this.notifyStockFetching$.next();
-  }
-  private connectTimer(): Observable<Array<Stock>> {
-    return this.notifyStockFetching$.pipe(
-      tap(rate => (this.refreshRate = rate)),
-      switchMap(() => this.stockQuery.items$),
-      timeout(this.refreshRate),
-      tap(stocks => {
-        this.notifyStockFetching$.next();
-      })
-
-    );
   }
   private handleStockFetchingData(): Observable<any> {
     return from(this.stocks).pipe(
