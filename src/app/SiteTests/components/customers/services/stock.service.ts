@@ -9,12 +9,4 @@ import { StockStore } from '../store/stock.store';
 export class StockService {
   constructor(private stockStore: StockStore, private http: HttpClient) {}
 
-  get() {
-    return this.http.get<Stock[]>("https://api.com").pipe(
-      tap(entities => {
-        // this./stockStore.set(entities);
-      })
-    );
-  }
-
 }
