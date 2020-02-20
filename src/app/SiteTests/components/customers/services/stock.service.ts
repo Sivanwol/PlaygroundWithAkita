@@ -32,7 +32,7 @@ export class StockService {
   private notifyStockUpdateFetching$: Subject<null> = new Subject<null>();
   private notifyStockUpdateRefreashRate$: BehaviorSubject<
     number
-  > = new BehaviorSubject<number>(30);
+  > = new BehaviorSubject<number>(30000);
   private notifyStockPoll$: BehaviorSubject<Array<Stock>> = new BehaviorSubject<
     Array<Stock>
   >([]);

@@ -14,10 +14,10 @@ export class StockBarComponent implements OnInit {
 
   ngOnInit() {
     this.refreshRates = [
-      { label: "30 sec", value: 30  },
-      { label: "1 min", value: 60 },
-      { label: "2 min", value: 120 },
-      { label: "5 min", value: 300 }
+      { label: "30 sec", value: 30000  },
+      { label: "1 min", value: 60000 },
+      { label: "2 min", value: 120000 },
+      { label: "5 min", value: 300000 }
     ];
     this.selectRate = this.refreshRates[0].value;
     this.stockService.updateRefreashRate(this.selectRate);
