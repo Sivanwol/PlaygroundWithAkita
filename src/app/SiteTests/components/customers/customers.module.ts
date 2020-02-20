@@ -35,6 +35,9 @@ import { StockBarComponent } from "./components/stock-bar/stock-bar.component";
 import { CustomerService } from "./services/customer.service";
 import { CustomerStore } from "./store/customer.store";
 import { CustomerQuery } from "./queries/customer.query";
+import { StockService } from './services/stock.service';
+import { StockStore } from './store/stock.store';
+import { StockQuery } from './queries/stock.query';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -52,7 +55,10 @@ import { CustomerQuery } from "./queries/customer.query";
     UserQuery,
     CustomerService,
     CustomerStore,
-    CustomerQuery
+    CustomerQuery,
+    StockService,
+    StockStore,
+    StockQuery
   ],
   entryComponents: [CustomerFormComponent],
   imports: [

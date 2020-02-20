@@ -40,10 +40,10 @@ export class StockStore extends Store<StockState> {
     });
   }
 
-  clearStockSelected(stockCode: string) {
+  clearStocks() {
     this.update((state: StockState) => {
       return {
-        list: arrayRemove(state.list, stockCode, "stockCode")
+        list: []
       };
     });
   }

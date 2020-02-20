@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SelectItem } from "primeng/api";
 import config from "../../config";
+import { StockService } from "../../services/stock.service";
 @Component({
   selector: "app-stock-select",
   templateUrl: "./stock-select.component.html",
@@ -9,7 +10,7 @@ import config from "../../config";
 export class StockSelectComponent implements OnInit {
   public stocks: Array<SelectItem> = [];
   public selectedStocks: Array<string> = [];
-  constructor() {}
+  constructor(private stockService: StockService) {}
 
   ngOnInit() {
     config.Symbols.forEach(item =>
@@ -18,6 +19,6 @@ export class StockSelectComponent implements OnInit {
   }
 
   onSelectChange($event) {
-    console.log($event);
+    this.stockService.requestNewStock($event);
   }
 }

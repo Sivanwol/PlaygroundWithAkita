@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SelectItem } from "primeng/api";
+import { StockService } from '../../services/stock.service';
 
 @Component({
   selector: "app-stock-bar",
@@ -9,7 +10,7 @@ import { SelectItem } from "primeng/api";
 export class StockBarComponent implements OnInit {
   refreshRates: SelectItem[];
   selectRate: number;
-  constructor() {}
+  constructor(private stockService: StockService) {}
 
   ngOnInit() {
     this.refreshRates = [
@@ -19,8 +20,9 @@ export class StockBarComponent implements OnInit {
       { label: "5 min", value: 300 }
     ];
     this.selectRate = this.refreshRates[0].value;
+    this.stockService.updateRefreashRate(this.selectRate);
   }
   onRefreashRateSelected($event) {
-
+    this.stockService.updateRefreashRate(this.selectRate);
   }
 }

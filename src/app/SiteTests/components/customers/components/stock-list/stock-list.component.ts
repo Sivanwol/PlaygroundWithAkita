@@ -1,13 +1,17 @@
-import { Component, OnInit , ChangeDetectorRef } from "@angular/core";
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Component, OnInit , OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Stock } from "../../models/stock.model";
 import { SelectItem } from "primeng/api";
+import { StockService } from '../../services/stock.service';
 
 @Component({
   selector: "app-stock-list",
   templateUrl: "./stock-list.component.html",
   styleUrls: ["./stock-list.component.scss"]
 })
-export class StockListComponent implements OnInit {
+export class StockListComponent implements OnInit ,OnDestroy{
+  subject: Subject<null> = new Subject;
   values: Stock[] = [];
   origValues: Stock[] = [];
   selectedItem: Stock;
@@ -16,10 +20,19 @@ export class StockListComponent implements OnInit {
   sortField: string;
   sortOrder: number;
   displayDialog: boolean;
-  constructor(private changeDetection: ChangeDetectorRef) {}
+  constructor(private stockService: StockService,private changeDetection: ChangeDetectorRef) {}
 
+  ngOnDestroy(): void {
+    this.subject.next();
+    this.subject.complete();
+  }
   ngOnInit() {
-    this.mockData();
+    // this.mockData();
+    this.stockService.getStocks().pipe(
+      takeUntil(this.subject)
+    ).subscribe(stocks =>{
+      this.values = stocks;
+    });
     this.sortOptions = [
       { label: "Desc high Rate", value: "!high" },
       { label: "Asc high Rate", value: "high" },
