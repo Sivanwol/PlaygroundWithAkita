@@ -38,18 +38,21 @@ export class StockService {
     private stockStore: StockStore,
     private stockQuery: StockQuery,
     private requestPollService: RequestPollService
-  ) {}
-  getStocks(): Observable<Array<Stock>> {
+  ) {
+  }
+  handleStocks(): Observable<void> {
     return this.notifyStockFetching$.pipe(
       find(() => this.stocks.length > 0),
       concatMap(stocks => this.handleStockFetchingData()),
       timeout(this.refreshRate),
       tap(stocks => {
         this.notifyStockFetching$.next();
-      }),
-
-      switchMap(() => this.stockQuery.items$),
+      })
     );
+  }
+
+  getStocks(): Observable<Array<Stock>> {
+    return this.stockQuery.items$;
   }
 
   public updateRefreashRate(refreshRate: number) {
@@ -60,13 +63,12 @@ export class StockService {
   public requestNewStock(stocks: string[]) {
     this.stocks = stocks;
     this.updateStateArr = new Set();
-    this.stockStore.clearStocks();
+    // this.stockStore.clearStocks();
     this.notifyStockFetching$.next();
   }
   private handleStockFetchingData(): Observable<any> {
     return from(this.stocks).pipe(
-      distinctUntilChanged(),
-      switchMap(stock => {
+      mergeMap(stock => {
         return this.requestPollService.requestStock(stock).pipe(
           find(res => !!res),
           tap(res => {

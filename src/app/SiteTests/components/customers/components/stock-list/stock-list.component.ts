@@ -28,6 +28,9 @@ export class StockListComponent implements OnInit ,OnDestroy{
   }
   ngOnInit() {
     // this.mockData();
+    this.stockService.handleStocks().pipe(
+      takeUntil(this.subject)
+    ).subscribe();
     this.stockService.getStocks().pipe(
       takeUntil(this.subject)
     ).subscribe(stocks =>{
