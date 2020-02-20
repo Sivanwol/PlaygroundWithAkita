@@ -47,7 +47,6 @@ export class StockService {
   getStocks(): Observable<Array<Stock>> {
     return this.notifyStockFetching$.pipe(
       find(() => this.stocks.length > 0),
-      mergeMap(() => this.connectTimer()),
       mergeMap(stocks => {
         return this.handleStockFetchingData().pipe(
           switchMap(stock => {
@@ -92,7 +91,6 @@ export class StockService {
   private handleStockFetchingData(): Observable<any> {
     return from(this.stocks).pipe(
       distinctUntilChanged(),
-      bufferCount(4),
       switchMap(stock => {
         return this.requestPollService.requestStock(stock).pipe(
           find(res => !!res),

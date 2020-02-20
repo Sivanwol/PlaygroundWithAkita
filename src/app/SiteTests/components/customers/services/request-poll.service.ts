@@ -17,18 +17,20 @@ export class RequestPollService {
       map(res => {
         if (res === null || res.hasOwnProperty("Error Message")) {
           return throwError(new Error("No data found..."));
+        } else {
+          const body = res.response["Global Quote"];
+          const obj: Stock = {
+            stockCode: stock,
+            open: body["02. open"],
+            high: body["03. high"],
+            low: body["04. low"],
+            volume: body["06. volume"],
+            lastUpdate: body["07. latest trading day"],
+            change: body["09. change"],
+            changePresent: body["10. change percent"]
+          };
+          return obj;
         }
-        const obj: Stock = {
-          stockCode: stock,
-          open: res["02. open"],
-          high: res["03. high"],
-          low: res["04. low"],
-          volume: res["06. volume"],
-          lastUpdate: res["07. latest trading day"],
-          change: res["09. change"],
-          changePresent: res["10. change percent"]
-        };
-        return obj;
       }),
       retry(3),
       catchError(error => {
