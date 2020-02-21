@@ -44,6 +44,9 @@
           <div>
             <div class="ui-g">
               <div class="ui-g-12">
+                Stock Code: <b>{{ item.stockCode }}</b>
+              </div>
+              <div class="ui-g-12">
                 Low: <b>{{ item.low }}</b>
               </div>
               <div class="ui-g-12">
@@ -69,8 +72,8 @@
     </ng-template>
     <ng-template let-item pTemplate="gridItem">
       <div style="padding:.5em" class="ui-g-12 ui-md-3">
-        <p-panel [header]="item.volume" [style]="{ 'text-align': 'center' }">
-          <div class="car-detail">{{ item.low }} - {{ item.high }}</div>
+        <p-panel [header]="item.stockCode" [style]="{ 'text-align': 'center' }">
+          <div class="car-detail">({{item.volume}}) - {{ item.low }} - {{ item.high }}</div>
           <hr class="ui-widget-content" style="border-top:0" />
           <button
             pButton

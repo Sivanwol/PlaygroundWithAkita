@@ -44,8 +44,11 @@ export class StockService {
   ) {}
   handleStocks(): Observable<void> {
     return this.notifyStockFetching$.pipe(
-      find(() => this.stocks.length > 0),
       mergeMap(stocks => this.handleStockFetchingData()),
+      catchError(err => {
+        console.log(err);
+        return of([]);
+      }),
       delay(this.refreshRate),
       repeat()
     );
@@ -61,9 +64,9 @@ export class StockService {
   }
 
   public requestNewStock(stocks: string[]) {
+    this.stockStore.clearStocks();
     this.stocks = stocks;
     this.updateStateArr = new Set();
-    this.stockStore.clearStocks();
     this.notifyStockFetching$.next();
   }
 
@@ -83,10 +86,10 @@ export class StockService {
             }
           })
         );
-      }, 3),
+      }),
       catchError(err => {
         console.log(err);
-        return of([])
+        return of([]);
       })
     );
   }
