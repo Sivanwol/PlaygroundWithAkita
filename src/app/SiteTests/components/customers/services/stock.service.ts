@@ -12,7 +12,9 @@ import {
   publish,
   exhaustMap,
   take,
-  concatMap
+  concatMap,
+  repeat,
+  catchError
 } from "rxjs/operators";
 import { Stock } from "../models/stock.model";
 import { StockStore } from "../store/stock.store";
@@ -24,7 +26,8 @@ import {
   from,
   interval,
   forkJoin,
-  ConnectableObservable
+  ConnectableObservable,
+  race
 } from "rxjs";
 import { StockQuery } from "../queries/stock.query";
 import { RequestPollService } from "./request-poll.service";
@@ -38,16 +41,13 @@ export class StockService {
     private stockStore: StockStore,
     private stockQuery: StockQuery,
     private requestPollService: RequestPollService
-  ) {
-  }
+  ) {}
   handleStocks(): Observable<void> {
     return this.notifyStockFetching$.pipe(
       find(() => this.stocks.length > 0),
-      concatMap(stocks => this.handleStockFetchingData()),
-      timeout(this.refreshRate),
-      tap(stocks => {
-        this.notifyStockFetching$.next();
-      })
+      mergeMap(stocks => this.handleStockFetchingData()),
+      delay(this.refreshRate),
+      repeat()
     );
   }
 
@@ -63,23 +63,30 @@ export class StockService {
   public requestNewStock(stocks: string[]) {
     this.stocks = stocks;
     this.updateStateArr = new Set();
-    // this.stockStore.clearStocks();
+    this.stockStore.clearStocks();
     this.notifyStockFetching$.next();
   }
+
   private handleStockFetchingData(): Observable<any> {
     return from(this.stocks).pipe(
       mergeMap(stock => {
         return this.requestPollService.requestStock(stock).pipe(
-          find(res => !!res),
           tap(res => {
-            const updateState = this.updateStateArr.has(res.stockCode);
-            if (!updateState) {
-              this.stockStore.addNewStockItem(res); // we update the stock as this stock we just got
-            } else {
-              this.stockStore.updateStock(res.stockCode, res);
+            if (res) {
+              const updateState = this.updateStateArr.has(res.stockCode);
+              if (!updateState) {
+                this.updateStateArr.add(res.stockCode);
+                this.stockStore.addNewStockItem(res); // we update the stock as this stock we just got
+              } else {
+                this.stockStore.updateStock(res.stockCode, res);
+              }
             }
           })
         );
+      }, 3),
+      catchError(err => {
+        console.log(err);
+        return of([])
       })
     );
   }

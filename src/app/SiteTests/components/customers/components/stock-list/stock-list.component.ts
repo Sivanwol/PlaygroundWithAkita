@@ -1,17 +1,17 @@
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Component, OnInit , OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Stock } from "../../models/stock.model";
 import { SelectItem } from "primeng/api";
-import { StockService } from '../../services/stock.service';
+import { StockService } from "../../services/stock.service";
 
 @Component({
   selector: "app-stock-list",
   templateUrl: "./stock-list.component.html",
   styleUrls: ["./stock-list.component.scss"]
 })
-export class StockListComponent implements OnInit ,OnDestroy{
-  subject: Subject<null> = new Subject;
+export class StockListComponent implements OnInit, OnDestroy {
+  subject: Subject<null> = new Subject();
   values: Stock[] = [];
   origValues: Stock[] = [];
   selectedItem: Stock;
@@ -20,7 +20,10 @@ export class StockListComponent implements OnInit ,OnDestroy{
   sortField: string;
   sortOrder: number;
   displayDialog: boolean;
-  constructor(private stockService: StockService,private changeDetection: ChangeDetectorRef) {}
+  constructor(
+    private stockService: StockService,
+    private changeDetection: ChangeDetectorRef
+  ) {}
 
   ngOnDestroy(): void {
     this.subject.next();
@@ -28,14 +31,17 @@ export class StockListComponent implements OnInit ,OnDestroy{
   }
   ngOnInit() {
     // this.mockData();
-    this.stockService.handleStocks().pipe(
-      takeUntil(this.subject)
-    ).subscribe();
-    this.stockService.getStocks().pipe(
-      takeUntil(this.subject)
-    ).subscribe(stocks =>{
-      this.values = stocks;
-    });
+    this.stockService.handleStocks().subscribe(
+      () => {},
+      error => console.error(error)
+    );
+    this.stockService.getStocks().subscribe(
+      stocks => {
+        this.values = stocks;
+        this.origValues = stocks;
+      },
+      error => console.error(error)
+    );
     this.sortOptions = [
       { label: "Desc high Rate", value: "!high" },
       { label: "Asc high Rate", value: "high" },
@@ -52,7 +58,9 @@ export class StockListComponent implements OnInit ,OnDestroy{
   mockData() {
     for (let i = 1; i <= 40; i++) {
       const randSeed = Math.floor(Math.random() * 100) + 1;
-      const randSeedChange = Number((Math.floor(Math.random() * 10) + 1).toFixed(2));
+      const randSeedChange = Number(
+        (Math.floor(Math.random() * 10) + 1).toFixed(2)
+      );
       const objSeed: Stock = {
         change: randSeedChange,
         changePresent: `${randSeedChange}%`,
@@ -73,7 +81,9 @@ export class StockListComponent implements OnInit ,OnDestroy{
     if (value === "") {
       this.values = this.origValues.slice();
     } else {
-      this.values = this.origValues.filter(item => item.volume.toString().includes(value));
+      this.values = this.origValues.filter(item =>
+        item.volume.toString().includes(value)
+      );
     }
     this.changeDetection.detectChanges();
   }
